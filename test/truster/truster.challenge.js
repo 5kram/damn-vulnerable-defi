@@ -33,7 +33,10 @@ describe('[Challenge] Truster', function () {
 
     after(async function () {
         /** SUCCESS CONDITIONS */
+        const Attacker = await ethers.getContractFactory('Attacker', attacker);
 
+        attackerContract = await Attacker.deploy();
+        await attackerContract.Attack(this.token.address, this.pool.address, attacker.address);
         // Attacker has taken all tokens from the pool
         expect(
             await this.token.balanceOf(attacker.address)
